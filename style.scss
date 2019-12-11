@@ -1,0 +1,361 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Kalam', cursive;
+}
+
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+:root {
+    --drawRed: 0;
+    --drawGreen: 0;
+    --drawBlue: 0;
+
+    --checkRed: 0;
+    --checkGreen: 0;
+    --checkBlue: 0;
+}
+
+$lightRed: rgb(192, 0, 0);
+$mediumRed: rgb(80, 1, 1);
+$darkRed: rgb(37, 0, 0);
+
+$lightGreen: rgb(25, 146, 21);
+$mediumGreen: rgb(11, 61, 9);
+$darkGreen: rgb(3, 17, 2);
+
+$lightBlue: rgb(16, 61, 185);
+$mediumBlue: rgb(5, 21, 63);
+$darkBlue: rgb(2, 8, 24);
+
+body {
+    height: 100vh;
+}
+
+// main-layer
+.main-layer {
+    @include flex();
+    position: absolute;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-color: #171717;
+    color: white;
+    width: 100%;
+    height: 100%;
+    padding: .5em;
+    
+}
+
+
+.title, .description {
+    font-size: 1.5rem;
+    text-shadow: .05em .05em .01em black; 
+}
+
+.square {
+    border: .1rem solid white;
+    width: 30vw;
+    height: 30vw;
+    border-radius: 1em;
+}
+
+.draw-square {
+    @include flex();
+    background-color: rgb(var(--drawRed), var(--drawGreen), var(--drawBlue));
+}
+.my-progress-bar {
+    position: relative;
+}
+
+.progress-percentage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: bold;
+    color: rgba(0,0,0, .1)
+}
+.button-box {
+    @include flex();
+    width: 100%;
+}
+.button {
+    width: 7rem;
+    height: 2.2rem;
+    background-color: rgb(223, 70, 0);
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    border-radius: .5em;  
+    margin: 0 .5em; 
+    text-shadow: .07em .07em .05em black; 
+    box-shadow: 
+    inset -.1em -.1em .2em .05em rgb(95, 30, 0),
+    .03em .03em .01em .01em rgb(12, 4, 0);
+    transition: 1s;
+    &:hover {
+        background-color: rgb(95, 30, 0);
+        box-shadow: 
+    inset -.1em -.1em .2em .05em rgb(27, 9, 0),
+    .03em .03em .01em .01em rgb(12, 4, 0);
+    }
+}
+
+
+// check-layer
+
+.check-layer {
+    position: absolute;
+    display: none;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #171717;
+}
+
+.player-square {
+    @include flex();
+    background-color: rgb(var(--checkRed), var(--checkGreen), var(--checkBlue));
+}
+
+.input-box {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    width: 30vw;
+    height: 50vw;
+}
+
+
+
+input {
+    // position: relative;
+    width: 100%;
+    height: 1rem;
+    -webkit-appearance: none;
+    background: rgba(0,0,0,0.8);
+    outline: none;
+    border-radius: 1rem;
+}
+
+
+
+input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: .1rem;
+    height: .1rem;
+    border-radius: 50%;
+}
+
+.redInput::-webkit-slider-thumb {
+    box-shadow: 0 0 0 .3rem $lightRed;
+    border: .5rem solid $darkRed;
+}
+
+.greenInput::-webkit-slider-thumb {
+    box-shadow: 0 0 0 .3rem $lightGreen;
+    border: .5rem solid $darkGreen;
+}
+
+.blueInput::-webkit-slider-thumb {
+    box-shadow: 0 0 0 .3rem $lightBlue;
+    border: .5rem solid $darkBlue;
+}
+
+
+
+
+.redInput {
+    background-color: $mediumRed;
+    box-shadow:  .1em 0 .3em .1em $darkRed;
+
+}
+
+.greenInput {
+    background-color: $mediumGreen;
+    box-shadow:  .1em 0 .3em .1em $darkGreen;
+}
+
+.blueInput {
+    background-color: $mediumBlue;
+    box-shadow:  .1em 0 .3em .1em $darkBlue;
+}
+// end-layer
+
+.end-layer {
+    position: relative;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #171717;
+}
+
+.compare-box {
+    display: flex;
+}
+
+.square-modifier {
+    height: 100vh;
+    width: 50vw;
+}
+
+.result-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5em;
+    font-weight: bold;
+    color: white;
+    text-shadow: .02em .02em .03em black;
+}
+
+.flaticon-close::before {
+    position: absolute;
+    top: .3em;
+    right: .3em;
+    color: white;
+    text-shadow: .04em .04em .02em black;
+    font-size: 2em;
+    margin: 0;
+}
+
+// list
+
+.list-layer {
+    display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: column;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+    background-color: black;
+    padding: 1em 0;
+    overflow-y: scroll;
+}
+
+.list-title {
+    @include flex();
+    font-size: 4em;
+    color: rgb(223, 70, 0);
+}
+
+.score {
+    font-size: 2em;
+    color: white;   
+}
+
+
+@media (min-width: 768px) {
+    html {
+        font-size: 1.5rem;
+    }
+    .square {
+        width: 25vw;
+        height: 25vw;
+    }
+}
+@media (min-width: 1024px) {
+    html {
+        font-size: 2.5rem;
+    }
+    .square {
+        width: 35vw;
+        height: 35vw;
+    }
+}
+@media (min-width: 1366px) {
+    html {
+        font-size: 3rem;
+    }
+    .square {
+        width: 40vw;
+        height: 40vw;
+    }
+}
+@media (min-width: 1500px) {
+    html {
+        font-size: 3rem;
+    }
+    .square {
+        width: 30vw;
+        height: 30vw;
+    }
+    .button {
+        width: 6rem;
+        height: 1.6rem;
+    }
+}
+
+
+@media (orientation:portrait) {
+
+    // main-layer
+    .main-layer {
+        justify-content: space-around;
+    }
+    .title {
+        font-size: 2rem;
+        text-align: center;
+    }
+    .button {
+        width: 70vw;
+        height: 2.5rem;
+        margin: .5em 0;
+    }
+    .square {
+        width: 90vw;
+        height: 90vw;
+    }
+    .button-box {
+        flex-direction: column;
+    }
+
+
+    // check-layer
+    .check-layer {
+        justify-content: space-evenly;
+        flex-direction: column;
+    }
+    .input-box {
+        justify-content: space-between;
+        width: 80%;
+        height: 50vw;
+    }
+
+    // end-layer
+
+    .compare-box {
+        flex-direction: column;
+    }
+    .square-modifier {
+        height: 50vh;
+        width: 100vw;
+    }
+}
+@media (orientation:portrait) and (min-width: 375px) {
+    html {
+        font-size: 1.5rem;
+    }
+}
+@media (orientation:portrait) and (min-width: 768px) {
+    html {
+        font-size: 1.7rem;
+    }
+    .input-box {
+        height: 25vw;
+    }
+}
+
