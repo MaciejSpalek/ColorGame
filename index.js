@@ -1,25 +1,30 @@
 const checkDuration = 10000;
 const fadeDuration = 0;
 const score = [];
+const timer = $('.timer');
+let timeleft;
 
 let bar;
 let squareSize;
 let currentPercent;
 let scoreCounter = 0;
 
-// wylosowane kolory na samym początku
+// Drawn colors
 let drawRed = 0;
 let drawGreen = 0;
 let drawBlue = 0;
 
-// kolory ustawione przez player'a
+// colors set by player
 let checkRed = 0;
 let checkGreen = 0;
 let checkBlue = 0;
 
-// timeoutsy
+// timeouts and intervals
 let firstTimeOut;
 let secondTimeOut;
+let downloadTimer;
+
+
 
 function addScore() {
     score[scoreCounter] = $('<div>').addClass('score').text((scoreCounter+1) + ".  " + currentPercent);
@@ -52,40 +57,26 @@ function setColor() {
     }, checkDuration)
 }
 
-function deleteProgressBar() {
-    $(bar).remove();
-}
 
-function addProgressBar(destination) {
-            bar = $('<div>').addClass('my-progress-bar');
-            $(destination).append(bar);
-            $(bar).circularProgress({
-                width: squareSize,
-                height: squareSize,
-                line_width:10,
-                color: "rgba(0, 0, 0, .25)",
-                starting_position: 0,
-                percent: 0
-            }).circularProgress('animate', 100, checkDuration);
-}
-
-function fadeLayer(show, element, duration) {
+function fadeElement(show, element, duration) {
     if(show) {
         $(element).css('display', 'flex').fadeIn(duration); 
     } else {
         $(element).css('display', 'none').fadeOut(duration); 
     }
-    
 }
 
 function checkLayer() {
-    fadeLayer(true, '.check-layer', fadeDuration);
-    addProgressBar('.check-layer .player-square'); 
-    
+    fadeElement(false, '.main-layer', fadeDuration); // hide main-layer
+    fadeElement(true, '.check-layer', fadeDuration); // show check-layer
+    timer.html('10s');
+    fadeElement(true, timer, 0);
+    startTimer();
+
     secondTimeOut = setTimeout(()=>{ 
         compareColors();
         addScore();
-        fadeLayer(true, '.end-layer', fadeDuration);
+        fadeElement(true, '.end-layer', fadeDuration);
         scoreCounter++;
     }, checkDuration);
     
@@ -124,12 +115,14 @@ function changeButtonState(element, isOff) {
     if(isOff) {
         $(element).prop('disabled', isOff).css({
             'background-color': 'rgb(95, 30, 0)',
-            'box-shadow': 'inset -.1em -.1em .2em .05em rgb(27, 9, 0), .03em .03em .01em .01em rgb(12, 4, 0)'
+            'border': '.15em solid rgb(150, 150, 150)',
+            'color': 'rgb(150, 150, 150)'
         }); 
     } else {
         $(element).prop('disabled', isOff).css({
             'background-color': 'rgb(223, 70, 0)',
-            'box-shadow': 'inset -.1em -.1em .2em .05em rgb(95, 30, 0), .03em .03em .01em .01em rgb(12, 4, 0)'
+            'border': '.15em solid white',
+            'color': 'white'
         }); 
     }
     
@@ -137,21 +130,23 @@ function changeButtonState(element, isOff) {
 }
 function drawButton() {
     $('.drawButton').click(()=> {
+        timer.html('10s');
+        fadeElement(true, timer, 0);
+        startTimer();
 
-        // zablokowanie przycisku
+        // block buttons
         changeButtonState('.drawButton', true);
         changeButtonState('.listButton', true);
         
-        // losuje liczby do rgb() w css'ie
+        // draw number for rgb() in css
         drawRed = randNumber(0, 255);
         drawGreen = randNumber(0, 255);
         drawBlue = randNumber(0, 255);
         
-        // ustawia zmiennym wylosowaną wartość
+        // set random value for variable
         setCssVariable('--drawRed', drawRed)
         setCssVariable('--drawGreen', drawGreen)
         setCssVariable('--drawBlue', drawBlue)   
-
         setColor(); 
     })
 }
@@ -173,8 +168,10 @@ function setDefaultSliderPosition() {
 function restart() {
     changeButtonState('.drawButton', false);
     changeButtonState('.listButton', false);
-    fadeLayer(false, '.check-layer', 0);
-    fadeLayer(false, '.end-layer', 0);
+    fadeElement(true, '.main-layer', 0);
+    fadeElement(false, '.check-layer', 0);
+    fadeElement(false, '.end-layer', 0);
+    fadeElement(false, timer, 0);
     setCssVariable('--drawRed', 0);
     setCssVariable('--drawGreen', 0);
     setCssVariable('--drawBlue', 0);
@@ -182,7 +179,7 @@ function restart() {
     setCssVariable('--checkGreen', 0);
     setCssVariable('--checkBlue', 0);
     setDefaultSliderPosition();
-    deleteProgressBar();
+
     clearTimeout(firstTimeOut); 
     clearTimeout(secondTimeOut); 
     
@@ -199,9 +196,21 @@ function resize() {
     });
 }
 
-$('.list-layer').fadeOut(0);
+function startTimer() {
+    timeleft = checkDuration/1000-1;
+    downloadTimer = setInterval(() => {
+        timer.html(`${timeleft}s`);
+        timeleft--;
+        if(timeleft < 0){
+          clearInterval(downloadTimer);
+        }
+    }, 1000);
+}
 
-// nasłuchiwania
+fadeElement(false, '.list-layer', 0);
+fadeElement(false, timer, 0);
+
+// listeners
 drawButton();
 sliders();
 cross();  

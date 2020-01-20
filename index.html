@@ -10,39 +10,45 @@
     <title>ColorGame</title>
 </head>
 <body>
-    <div class="main-layer">
-        <h1 class="title">Remember this color! </h1>
-        <div class="square draw-square"></div>
-        <div class="button-box">
-            <button class="button drawButton">Draw Color</button>
-            <button class="button listButton">Your scores</button>
-        </div>
-    </div>
+    <main class="main">
+        <section class="main-layer">
+            <h1 class="title">Remember this color! </h1>
+            <div class="square draw-square">
+                <span class="timer firstTimer">10s</span>
+            </div>
+            <div class="button-box">
+                <button class="button drawButton">Draw Color</button>
+                <button class="button listButton">Your scores</button>
+            </div>
+        </section>
 
-    <div class="check-layer">
-        <div class="square player-square"></div>
-        <div class="input-box">
-            <input type="range" class="redInput" value="0" min="0" max="255">
-            <input type="range" class="greenInput" value="0" min="0" max="255">
-            <input type="range" class="blueInput" value="0" min="0" max="255">
+        <section class="check-layer">
+            <div class="square player-square">
+                <span class="timer secondTimer">10s</span>
+            </div>
+            <form class="input-box">
+                <input type="range" class="redInput" value="0" min="0" max="255">
+                <input type="range" class="greenInput" value="0" min="0" max="255">
+                <input type="range" class="blueInput" value="0" min="0" max="255">
+            </form>
+        </section>
+
+        <section class="end-layer">
+            <div class="result-text"></div>
+            <div class="compare-box">
+                <div class="draw-square square-modifier"></div>
+                <div class="player-square square-modifier"></div>
+            </div>
+            <i class="flaticon-close cross"></i>
+        </section>
+        <div class="list-layer">
+            <h2 class="list-title">Scores</h2>
+            <i class="flaticon-close cross"></i>
         </div>
-    </div>
-    <div class="end-layer">
-        <div class="result-text"></div>
-        <div class="compare-box">
-            <div class="draw-square square-modifier"></div>
-            <div class="player-square square-modifier"></div>
-        </div>
-        <i class="flaticon-close cross"></i>
-    </div>
-    <div class="list-layer">
-        <h1 class="list-title">Scores</h1>
-        <i class="flaticon-close"></i>
-    </div>
+    </main>
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <script src="plugin.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
