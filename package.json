@@ -1,0 +1,23 @@
+{
+  "name": "colorgame",
+  "version": "1.0.0",
+  "description": "![Main screen](img/ColorGameView.png)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "lite-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaciejSpalek/ColorGame.git"
+  },
+  "author": "Maciej Spałek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaciejSpalek/ColorGame/issues"
+  },
+  "homepage": "https://github.com/MaciejSpalek/ColorGame#readme",
+  "devDependencies": {
+    "lite-server": "^2.5.4"
+  }
+}
